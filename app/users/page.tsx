@@ -1,33 +1,22 @@
-import React from "react";
+import React, { Suspense } from "react";
+import Link from "next/link";
+import UsersTable from "./new/UsersTable";
 
-interface User {
-  id: number;
-  name: string;
-  email: string;
-}
+
 const UserPage = async () => {
-  const res = await fetch("https://jsonplaceholder.typicode.com/users");
-  const user: User[] = await res.json();
+ 
 
   return (
-    <div>
+    <div className="p-5">
       <h1>User Details here</h1>
-      <table className="table table-border">
-        <thead>
-          <tr>
-            <th>User Name</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {user.map((u) => (
-            <tr key={u.id}>
-              <td>{u.name}</td>
-              <td>{u.email}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Link href="users/new" className="btn">
+        New
+      </Link>
+      <Suspense
+        fallback={<span className="loading loading-ring loading-md"></span>}
+      >
+        <UsersTable />
+      </Suspense>
     </div>
   );
 };
